@@ -39,7 +39,7 @@ const NavigationBar = ({ itemsLength }: { itemsLength: number }) => {
         Mostrando <span>{currentPerPage}</span> de <span>{itemsLength}</span>{" "}
         itens
       </span>
-      <div className="flex gap-5  ">
+      <div className="flex gap-5 max-sm:gap-2  ">
         <div className="flex items-center gap-1">
           <span className="text-sm text-zinc-500 max-sm:hidden">
             Itens por página
