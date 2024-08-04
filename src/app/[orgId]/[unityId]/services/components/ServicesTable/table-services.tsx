@@ -73,7 +73,7 @@ const TableServices = ({ services }: { services: ServicesTableType[] }) => {
 
             <tbody className="w-full text-left">
               {services.map((service) => (
-                <tr className="border-t border-zinc-900 ">
+                <tr key={service.id} className="border-t border-zinc-900 ">
                   <td className="text-zinc-200 text-sm font-medium px-2  py-6">
                     <label
                       htmlFor=""
