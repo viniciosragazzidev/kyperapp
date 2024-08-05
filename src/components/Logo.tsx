@@ -13,10 +13,10 @@ export function Logo({ mode, ...props }: LogoProps) {
         <div
           {...props}
           className={cn(
-            `w-8 h-8  z-50 rounded-xl bg-zinc-200  relative  text-2xl  text-center  ${props.className}`
+            `w-8 h-8  z-50 rounded-xl bg-zinc-200 text-zinc-900 font-bold  relative  text-2xl  text-center  ${props.className}`
           )}
         >
-          <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <span className="absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2">
             K
           </span>
         </div>

@@ -10,10 +10,10 @@ interface StatusBadgeProps {
 }
 const StatusBadge = ({ children, status, className }: StatusBadgeProps) => {
   const statusColorClass: { [key: string]: string } = {
-    aberto: "text-green-500",
-    pendente: "text-yellow-500",
+    aberto: "text-zinc-200 bg-zinc-900 border border-zinc-800",
+    pendente: "bg-yellow-950 text-yellow-400",
     pronto: "bg-teal-950 text-teal-400",
-    iniciado: "bg-yellow-950 text-yellow-400",
+    iniciado: "bg-sky-950 text-sky-400",
   };
 
   const [statusColor, setStatusColor] = React.useState<string>(

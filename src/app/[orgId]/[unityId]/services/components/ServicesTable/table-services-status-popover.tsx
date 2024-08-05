@@ -46,7 +46,7 @@ const TableServicesStatusPopover = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="w-max h-full  flex cursor-pointer items-center gap-2 max-md:h-11 border border-dashed border-zinc-700/80 rounded-full px-3 py-2 text-zinc-600">
+        <div className="w-max max-xs:w-full max-xs:max-w-36 overflow-hidden h-full  flex cursor-pointer items-center gap-2 max-md:h-11 border border-dashed border-zinc-700/80 rounded-full px-3 py-2 text-zinc-600">
           <CirclePlus size={16} />
           {selectedStatus && selectedStatus.length > 0 ? (
             <>

@@ -130,3 +130,12 @@ option {
     }
   }
 }
+
+input[type="checkbox"] {
+  accent-color: transparent !important;
+
+  filter: sepia(50%) brightness(80%) hue-rotate(120deg) saturate(10%)
+    contrast(300%);
+
+  box-sizing: border-box;
+}

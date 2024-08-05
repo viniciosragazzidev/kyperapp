@@ -1,53 +1,79 @@
 "use client";
 
+import React, { useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import React from "react";
+import { CircleCheck, CircleDashed, Ellipsis } from "lucide-react";
+import { toast } from "sonner";
+
 import StatusBadge from "../../../components/Table/StatusBadge";
 import { CardInfoNotificationAvatar } from "../../../components/CardInfo";
-import { CircleCheck, CircleDashed, Ellipsis } from "lucide-react";
-import { StatusType } from "@/lib/types";
+import { osTableType, StatusType } from "@/lib/types";
 import { brl, formateDate } from "@/lib/utils";
+import TableServicesOptionsPopover from "./table-services-options-popover";
 
-export interface ServicesTableType {
-  id: number;
-  os: string;
-  client: [
-    {
-      name: string;
-      contact: string;
-    }
-  ];
-  items: {
-    id: number;
-    name: string;
-    brand: string;
-    model: string;
-  }[];
-  status: StatusType;
-  created_at: string;
-  technician: string;
-  amount: {
-    value: number;
-    status: "pago" | "pendente";
-  };
+// Interface para definir o tipo de dado da tabela de serviços
+export interface ServicesTableType extends osTableType {
+  unityId: string;
 }
-const TableServices = ({ services }: { services: ServicesTableType[] }) => {
+
+// Componente principal da Tabela de Serviços
+const TableServices = ({
+  services,
+  setCheckedRowTable,
+  checkedRowTable,
+}: {
+  services: ServicesTableType[];
+  setCheckedRowTable: React.Dispatch<React.SetStateAction<number[]>>;
+  checkedRowTable: number[];
+}) => {
+  // Função para selecionar/desmarcar todas as linhas da tabela
+  const handleCheckAll = () => {
+    if (checkedRowTable.length === services.length) {
+      setCheckedRowTable([]);
+      toast.warning("Todas as linhas selecionadas foram removidas");
+    } else {
+      setCheckedRowTable(services.map((service) => service.id));
+      toast.success("Todas as linhas visiveis foram selecionadas");
+    }
+  };
+
+  // Função para selecionar/desmarcar uma linha específica da tabela
+  const handleCheckOne = (id: number) => {
+    const service = services.find((service) => service.id === id);
+    if (service && service.os) {
+      if (checkedRowTable.includes(id)) {
+        setCheckedRowTable(checkedRowTable.filter((item) => item !== id));
+        toast.warning(
+          `A os #${service.os} foi removida da lista de selecionados`
+        );
+      } else {
+        setCheckedRowTable([...checkedRowTable, id]);
+        toast.success(
+          `A os #${service.os} foi adicionada a lista de selecionados`
+        );
+      }
+    }
+  };
+
   return (
-    <ScrollArea className=" overflow-hidden backdrop-blur-sm py-4 relative max-lg:w-[calc(100vw-64px)] max-sm:w-[calc(100vw-32px)]">
-      <div className="w-full relative  block min-h-14 min-w-[800px] ">
+    <ScrollArea className="overflow-hidden backdrop-blur-sm py-4 relative max-lg:w-[calc(100vw-64px)] max-sm:w-[calc(100vw-32px)]">
+      <div className="w-full relative block min-h-14 min-w-[800px] ">
         {services && services.length > 0 ? (
-          <table className="w-full   ">
+          <table className="w-full">
             <thead className="w-full text-left border-t-2 border-zinc-800">
-              <tr className="">
+              <tr>
                 <th className="text-zinc-200 text-sm font-medium px-2 py-3">
                   <label
                     htmlFor=""
                     className="w-4 h-4 border border-zinc-800 block rounded-sm"
                   >
-                    <input type="checkbox" className="w-4 h-4 hidden" />
+                    <input
+                      type="checkbox"
+                      onChange={handleCheckAll}
+                      className="w-4 h-4"
+                    />
                   </label>
                 </th>
-
                 <th className="text-zinc-200 text-sm font-medium px-2">OS</th>
                 <th className="text-zinc-200 text-sm font-medium px-2">
                   Cliente
@@ -73,13 +99,18 @@ const TableServices = ({ services }: { services: ServicesTableType[] }) => {
 
             <tbody className="w-full text-left">
               {services.map((service) => (
-                <tr key={service.id} className="border-t border-zinc-900 ">
-                  <td className="text-zinc-200 text-sm font-medium px-2  py-6">
+                <tr key={service.id} className="border-t border-zinc-900">
+                  <td className="text-zinc-200 text-sm font-medium px-2 py-6">
                     <label
                       htmlFor=""
                       className="w-4 h-4 border border-zinc-800 block rounded-sm"
                     >
-                      <input type="checkbox" className="w-4 h-4 hidden" />
+                      <input
+                        type="checkbox"
+                        checked={checkedRowTable.includes(service.id)}
+                        onChange={() => handleCheckOne(service.id)}
+                        className="w-4 h-4"
+                      />
                     </label>
                   </td>
                   <td className="text-zinc-600 text-sm font-medium px-2">
@@ -87,7 +118,7 @@ const TableServices = ({ services }: { services: ServicesTableType[] }) => {
                   </td>
                   <td className="text-zinc-300 text-sm font-medium px-2">
                     <div className="flex flex-col">
-                      <span className="text-zinc-200 text-sm font-medium ">
+                      <span className="text-zinc-200 text-sm font-medium">
                         {service.client[0].name}
                       </span>
                       <span className="text-zinc-600 text-sm">
@@ -95,18 +126,18 @@ const TableServices = ({ services }: { services: ServicesTableType[] }) => {
                       </span>
                     </div>
                   </td>
-                  <td className="text-zinc-300 text-sm font-medium ">
-                    <div className="flex flex-1 items-center ">
+                  <td className="text-zinc-300 text-sm font-medium">
+                    <div className="flex flex-1 items-center">
                       <div className="flex flex-col flex-1">
-                        <span className="text-zinc-200 text-sm font-medium ">
+                        <span className="text-zinc-200 text-sm font-medium">
                           {service.items[0].name}
                         </span>
                         <span className="text-zinc-600 text-sm">
-                          {service.items[0].brand} / {service.items[0].model}{" "}
+                          {service.items[0].brand} / {service.items[0].model}
                         </span>
                       </div>
                       {service.items.length > 1 && (
-                        <div className="w-6 h-5 py-3  flex items-center mr-4 text-xs font-bold justify-center bg-teal-950 px-1 text-teal-400 rounded-full">
+                        <div className="w-6 h-5 py-3 flex items-center mr-4 text-xs font-bold justify-center bg-teal-950 px-1 text-teal-400 rounded-full">
                           <span>+{service.items.length - 1}</span>
                         </div>
                       )}
@@ -124,11 +155,9 @@ const TableServices = ({ services }: { services: ServicesTableType[] }) => {
                   <td className="text-zinc-600 text-sm font-medium px-2">
                     <div className="flex items-center gap-2">
                       <CardInfoNotificationAvatar url="https://avatars.githubusercontent.com/u/125518719?v=4" />
-
                       <span>{service.technician}</span>
                     </div>
                   </td>
-
                   <td className="text-zinc-600 text-sm font-medium px-2">
                     <div className="flex items-center gap-2">
                       <span>
@@ -141,15 +170,7 @@ const TableServices = ({ services }: { services: ServicesTableType[] }) => {
                       <span>{brl.format(service.amount.value)}</span>
                     </div>
                   </td>
-
-                  <td className="text-zinc-600 text-sm font-medium px-2 w-min">
-                    <span className=" border w-7 h-7  border-zinc-800 rounded-md  cursor-pointer group active:scale-105 active:shadow-sm active:shadow-zinc-800 right-4 flex items-center justify-center">
-                      <Ellipsis
-                        className="text-zinc-400  group-hover:scale-95 transition-transform group-active:scale-90 "
-                        size={16}
-                      />
-                    </span>
-                  </td>
+                  <TableServicesOptionsPopover idOs={service.id.toString()} />
                 </tr>
               ))}
             </tbody>

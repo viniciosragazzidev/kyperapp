@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   CardInfo,
@@ -8,16 +9,34 @@ import {
   CardInfoValue,
 } from "../components/CardInfo";
 import { Package } from "lucide-react";
-import ServicesTable from "./components/ServicesTable/ServicesTable";
+import ServicesTable from "./components/ServicesTable/ServicesTableContainer";
+import { servicesRoot } from "@/lib/constants";
+import { useParams } from "next/navigation";
 
 const Services = () => {
+  const params = useParams();
+  const unityId = params.unityId;
+
+  const servicesByUnity = servicesRoot.filter((service) => {
+    return service.unityId === unityId;
+  });
+
+  const osStatusOpen = servicesByUnity.filter((service) => {
+    return service.status.value === "aberto";
+  });
+
+  const osStatusClose = servicesByUnity.filter((service) => {
+    return service.status.value === "pronto";
+  });
   return (
     <main className="w-full h-full text-slate-200 flex flex-col gap-8">
       <div className="px-4 grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4">
         <CardInfo>
           <CardInfoBody>
             <CardInfoTitle>Serviços</CardInfoTitle>
-            <CardInfoValue days={30}>18 Entradas</CardInfoValue>
+            <CardInfoValue days={30}>
+              {servicesByUnity.length} Entradas
+            </CardInfoValue>
           </CardInfoBody>
 
           <CardInfoNotification>
@@ -35,7 +54,9 @@ const Services = () => {
         <CardInfo>
           <CardInfoBody>
             <CardInfoTitle>Em aberto</CardInfoTitle>
-            <CardInfoValue days={30}>08 Ordens</CardInfoValue>
+            <CardInfoValue days={30}>
+              {osStatusOpen.length} Ordens
+            </CardInfoValue>
           </CardInfoBody>
 
           <CardInfoNotification>
@@ -53,7 +74,9 @@ const Services = () => {
         <CardInfo>
           <CardInfoBody>
             <CardInfoTitle>Finalizados</CardInfoTitle>
-            <CardInfoValue days={30}>10 Ordens</CardInfoValue>
+            <CardInfoValue days={30}>
+              {osStatusClose.length} Ordens
+            </CardInfoValue>
           </CardInfoBody>
 
           <CardInfoNotification>

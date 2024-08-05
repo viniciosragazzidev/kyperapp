@@ -2,13 +2,14 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 const button = tv({
-  base: "flex items-center gap-2  border-none px-5 py-2 rounded-lg font-medium   hover:opacity-85 transition-all max-md:w-full justify-center ",
+  base: "flex items-center  gap-1.5  border-none px-5 py-2 rounded-lg font-medium   hover:opacity-85 transition-all max-md:w-full justify-center ",
   variants: {
     color: {
       primary: "text-primary-foreground bg-primary",
-      secondary: "text-zinc-200 bg-zinc-800",
+      secondary: "text-zinc-200 bg-zinc-900 border border-zinc-600",
     },
     size: {
+      sm: "h-8 rounded-md px-2.5 text-xs",
       full: "w-full flex-1  white-space-nowrap text-nowrap",
     },
   },
