@@ -28,6 +28,9 @@ const PageOS = () => {
         <div className="flex flex-col gap-6 w-full max-lg:flex-row max-lg:justify-center max-w-sm max-md:p-4 max-md:bg-zinc-950 max-md:border max-md:border-zinc-900/40 rounded-md">
           <Button
             size="full"
+            onClick={() => {
+              setCurrentStep(0);
+            }}
             color={currentStep === 0 ? "primary" : "secondary"}
           >
             <Crown size={20} />{" "}
@@ -37,6 +40,9 @@ const PageOS = () => {
 
           <Button
             size="full"
+            onClick={() => {
+              setCurrentStep(1);
+            }}
             disabled={!os && currentStep === 0}
             color={currentStep === 1 ? "primary" : "secondary"}
           >
