@@ -1,5 +1,5 @@
 import { Circle, CircleCheck, CircleHelp, Timer } from "lucide-react";
-import { StatusType } from "./types";
+import { itemTableType, StatusType } from "./types";
 import { ServicesTableType } from "@/app/[orgId]/[unityId]/services/components/ServicesTable/table-services";
 
 export const StatusItens: StatusType[] = [
@@ -373,5 +373,92 @@ export const servicesRoot: ServicesTableType[] = [
     },
     created_at: "2024-08-12T17:45:00.000Z",
     technician: "André",
+  },
+];
+
+export const itemsRoot: itemTableType[] = [
+  {
+    id: 1,
+    name: "Guitarra Elétrica",
+    brand: "Fender",
+    model: "Stratocaster",
+    technician: "Lucas Martins",
+    status: {
+      label: "Pendente",
+      value: "pendente",
+    },
+    created_at: "2024-07-15T09:00:00Z",
+    amount: {
+      value: 3500,
+      status: "pago",
+    },
+    osId: "OS98765",
+  },
+  {
+    id: 2,
+    name: "Bateria",
+    brand: "Yamaha",
+    model: "Stage Custom",
+    technician: "Mariana Costa",
+    status: {
+      label: "Pendente",
+      value: "pendente",
+    },
+    created_at: "2024-07-20T11:30:00Z",
+    amount: {
+      value: 4500,
+      status: "pendente",
+    },
+    osId: "OS12346",
+  },
+  {
+    id: 3,
+    name: "Teclado",
+    brand: "Korg",
+    model: "Pa4X",
+    technician: "Pedro Henrique",
+    status: {
+      label: "Pendente",
+      value: "pendente",
+    },
+    created_at: "2024-07-25T08:45:00Z",
+    amount: {
+      value: 5000,
+      status: "pago",
+    },
+  },
+  {
+    id: 4,
+    name: "Violino",
+    brand: "Stradivarius",
+    model: "Antique",
+    technician: "Sophia Almeida",
+    status: {
+      label: "Pendente",
+      value: "pendente",
+    },
+    created_at: "2024-08-01T14:00:00Z",
+    amount: {
+      value: 12000,
+      status: "pendente",
+    },
+    osId: "OS12347",
+  },
+  {
+    id: 5,
+    name: "Baixo Elétrico",
+    brand: "Ibanez",
+    model: "SR500",
+    technician: "Rafael Santos",
+    status: {
+      label: "Pendente",
+      value: "pendente",
+    },
+    created_at: "2024-07-30T13:15:00Z",
+    amount: {
+      value: 3000,
+      status: "pago",
+    },
+    osId: "OS12348",
   },
 ];

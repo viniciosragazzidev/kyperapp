@@ -16,7 +16,7 @@ const FormLogin = ({
   setOpenModalModeIngress: (value: boolean) => void;
 }) => {
   return (
-    <form className="w-full md:h-16 rounded-xl flex px-4 text-zinc-400 gap-5 bg-zinc-900 max-md:p-4 items-center max-md:flex-col">
+    <form className="w-full md:h-16 rounded-xl flex px-4 text-zinc-400 gap-5 bg-zinc-950 max-md:p-4 items-center max-md:flex-col">
       <div className="w-full h-full flex items-center gap-2 max-md:h-11">
         <User />
         <input

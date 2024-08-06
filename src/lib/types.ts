@@ -28,3 +28,19 @@ export type osTableType = {
     status: "pago" | "pendente";
   };
 };
+
+export type itemTableType = {
+  id: number;
+  name: string;
+  brand: string;
+  model: string;
+
+  technician: string;
+  status: StatusType;
+  created_at: string;
+  amount: {
+    value: number;
+    status: "pago" | "pendente";
+  };
+  osId?: string;
+};

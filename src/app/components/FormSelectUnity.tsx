@@ -21,7 +21,7 @@ const FormSelectUnity = ({ organization }: any) => {
   };
   return (
     <>
-      <div className="w-full md:h-16 rounded-xl flex px-4 text-zinc-400 gap-5 pl-11 bg-zinc-900 max-md:p-4  items-center max-md:flex-col">
+      <div className="w-full md:h-16 rounded-xl flex px-4 text-zinc-400 gap-5 pl-11 bg-zinc-950 max-md:p-4  items-center max-md:flex-col">
         <div className="w-full h-full  ">
           <div
             onClick={() => {

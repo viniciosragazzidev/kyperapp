@@ -13,6 +13,7 @@ import {
 import { useParams, useRouter } from "next/navigation";
 
 import React, { useEffect } from "react";
+import { toast } from "sonner";
 
 const SelectUnityModal = ({
   open,
@@ -41,6 +42,8 @@ const SelectUnityModal = ({
     setCurrentUnity(unityChecked);
     if (navigateTo) {
       router.push(`/${navigateTo}/${unityChecked.id || params.unityId}`);
+    } else {
+      toast.success(`${unityChecked.name} foi selecionada`);
     }
     onPress();
   };
