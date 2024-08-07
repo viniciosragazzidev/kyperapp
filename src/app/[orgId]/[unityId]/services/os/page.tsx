@@ -1,10 +1,9 @@
 "use client";
 
 import Button from "@/components/Button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { servicesRoot } from "@/lib/constants";
 import { Crown, Newspaper } from "lucide-react";
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import FormClientOS from "./components/form-client-os";
 import FormInfoOs from "./components/form-info-os";
