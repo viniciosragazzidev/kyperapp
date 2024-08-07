@@ -36,7 +36,7 @@ const RegisterModal = () => {
           </DescriptionModal>
         </header>
         <form className="w-full flex flex-col gap-4" action="">
-          <div className="field w-full flex items-center gap-2.5">
+          <div className="field px-2 w-full flex items-center gap-2.5">
             <div className="input w-full flex flex-col gap-2">
               <label
                 className="font-medium text-zinc-400 text-sm"
@@ -80,7 +80,7 @@ const RegisterModal = () => {
               </div>
             </div>
           </div>
-          <div className="field w-full flex items-center gap-2.5">
+          <div className="field px-2 w-full flex items-center gap-2.5">
             <div className="input w-full flex flex-col gap-2">
               <label
                 className="font-medium text-zinc-400 text-sm"
@@ -125,7 +125,7 @@ const RegisterModal = () => {
               </div>
             </div>
           </div>
-          <div className="field w-full flex items-center gap-2.5">
+          <div className="field px-2 w-full flex items-center gap-2.5">
             <div className="input w-full flex flex-col gap-2">
               <label
                 className="font-medium text-zinc-400 text-sm"

@@ -19,7 +19,7 @@ const PageOS = () => {
 
   const [currentStep, setCurrentStep] = React.useState(1);
   return (
-    <main className="w-full h-screen flex relative gap-10 md:gap-16 max-h-[calc(100vh-10rem)] max-lg:flex-col px-4">
+    <main className="w-full h-min flex relative gap-10 md:gap-16 max-h-[calc(100vh-10rem)] max-lg:flex-col px-4">
       <div className="flex w-full h-full   lg:max-w-80 max-lg:w-full max-lg:h-min  flex-col gap-6 max-lg:justify-center max-lg:items-center max-lg:text-center ">
         <h3 className="font-semibold text-xl text-zinc-200 max-lg:hidden">
           {os ? `OS #${os.os}` : "Adicione uma nova OS:"}
@@ -52,9 +52,9 @@ const PageOS = () => {
           </Button>
         </div>
       </div>
-      <ScrollArea className="flex w-full h-full flex-1  md:max-h-[calc(100vh-10rem)] ">
+      <section className="flex w-full h-full flex-1  pb-24">
         {currentStep === 0 ? <FormClientOS /> : <FormInfoOs />}
-      </ScrollArea>
+      </section>
     </main>
   );
 };

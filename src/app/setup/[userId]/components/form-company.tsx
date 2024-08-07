@@ -43,7 +43,7 @@ const FormCompany = ({
   "
       >
         <div className="flex gap-5  w-full">
-          <div className="field flex flex-col gap-2 flex-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1">
             <label htmlFor="name-company" className="font-medium text-zinc-400">
               Nome Fantasia{" "}
             </label>
@@ -60,7 +60,7 @@ const FormCompany = ({
               />
             </div>
           </div>
-          <div className="field flex flex-col gap-2 flex-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1">
             <label
               htmlFor="street-number-company"
               className="font-medium text-zinc-400"
@@ -86,7 +86,7 @@ const FormCompany = ({
         </div>
 
         <div className=" flex gap-5 max-sm:grid max-sm:grid-cols-2  w-full">
-          <div className="field flex w-full flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex w-full flex-col gap-2 flex-1 max-sm:col-span-1">
             <label
               htmlFor="street-company"
               className="font-medium text-zinc-400"
@@ -106,7 +106,7 @@ const FormCompany = ({
             </div>
           </div>
 
-          <div className="field flex w-full max-w-[74px] flex-col gap-2 flex-grow-1 max-sm:col-span-1">
+          <div className="field px-2 flex w-full max-w-[74px] flex-col gap-2 flex-grow-1 max-sm:col-span-1">
             <label
               htmlFor="street-number-company"
               className="font-medium text-zinc-400"
@@ -126,7 +126,7 @@ const FormCompany = ({
             </div>
           </div>
 
-          <div className="field flex w-full flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex w-full flex-col gap-2 flex-1 max-sm:col-span-1">
             <label
               htmlFor="neighborhood-company"
               className="font-medium text-zinc-400"
@@ -146,7 +146,7 @@ const FormCompany = ({
             </div>
           </div>
 
-          <div className="field flex w-full flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex w-full flex-col gap-2 flex-1 max-sm:col-span-1">
             <label htmlFor="cep-company" className="font-medium text-zinc-400">
               CEP
             </label>
@@ -165,7 +165,7 @@ const FormCompany = ({
         </div>
 
         <div className="flex gap-5  w-full">
-          <div className="field flex flex-col gap-2 flex-1 max-w-56">
+          <div className="field px-2 flex flex-col gap-2 flex-1 max-w-56">
             <label htmlFor="city-company" className="font-medium text-zinc-400">
               Cidade
             </label>
@@ -182,7 +182,7 @@ const FormCompany = ({
               />
             </div>
           </div>
-          <div className="field flex flex-col gap-2 flex-1 max-w-56">
+          <div className="field px-2 flex flex-col gap-2 flex-1 max-w-56">
             <label
               htmlFor="state-company"
               className="font-medium text-zinc-400"
@@ -205,7 +205,7 @@ const FormCompany = ({
         </div>
 
         <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2 ">
-          <div className="field flex flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label htmlFor="phone" className="font-medium text-zinc-400">
               Telefone
             </label>
@@ -223,7 +223,7 @@ const FormCompany = ({
             </div>
           </div>
 
-          <div className="field flex flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label htmlFor="email" className="font-medium text-zinc-400">
               Email
             </label>
@@ -241,7 +241,7 @@ const FormCompany = ({
             </div>
           </div>
 
-          <div className="field flex flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label
               htmlFor="principal_function"
               className="font-medium text-zinc-400"

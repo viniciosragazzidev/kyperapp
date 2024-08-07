@@ -48,10 +48,10 @@ const ItemOsTable = ({
   };
 
   return (
-    <ScrollArea className="overflow-hidden backdrop-blur-sm py-4 relative max-lg:w-[calc(100vw-64px)] max-h-96 max-sm:w-[calc(100vw-32px)]">
-      <div className="w-full relative block min-h-14 max-md:min-w-[800px] min-w-[500px]  ">
+    <ScrollArea className="overflow-hidden backdrop-blur-sm py-4 relative max-lg:w-[calc(100vw-64px)] h-screen max-h-72 max-sm:w-[calc(100vw-32px)]">
+      <div className="w-full relative block h-80 max-md:min-w-[800px] min-w-[500px]  ">
         {items && items.length > 0 ? (
-          <table className="w-full ">
+          <table className="w-full h-full">
             <thead className="w-full text-left border-t-2 border-zinc-800">
               <tr>
                 <th className="text-zinc-200 text-sm font-medium px-2 py-3">
@@ -144,6 +144,7 @@ const ItemOsTable = ({
           </div>
         )}
       </div>
+      <ScrollBar orientation="vertical" />
       <ScrollBar orientation="horizontal" />
     </ScrollArea>
   );

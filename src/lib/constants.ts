@@ -395,6 +395,23 @@ export const itemsRoot: itemTableType[] = [
     osId: "OS98765",
   },
   {
+    id: 1,
+    name: "Guitarra Elétrica",
+    brand: "Fender",
+    model: "Stratocaster",
+    technician: "Lucas Martins",
+    status: {
+      label: "Pendente",
+      value: "pendente",
+    },
+    created_at: "2024-07-15T09:00:00Z",
+    amount: {
+      value: 3500,
+      status: "pago",
+    },
+    osId: "OS98765",
+  },
+  {
     id: 2,
     name: "Bateria",
     brand: "Yamaha",
@@ -443,6 +460,40 @@ export const itemsRoot: itemTableType[] = [
       status: "pendente",
     },
     osId: "OS12347",
+  },
+  {
+    id: 5,
+    name: "Baixo Elétrico",
+    brand: "Ibanez",
+    model: "SR500",
+    technician: "Rafael Santos",
+    status: {
+      label: "Pendente",
+      value: "pendente",
+    },
+    created_at: "2024-07-30T13:15:00Z",
+    amount: {
+      value: 3000,
+      status: "pago",
+    },
+    osId: "OS12348",
+  },
+  {
+    id: 5,
+    name: "Baixo Elétrico",
+    brand: "Ibanez",
+    model: "SR500",
+    technician: "Rafael Santos",
+    status: {
+      label: "Pendente",
+      value: "pendente",
+    },
+    created_at: "2024-07-30T13:15:00Z",
+    amount: {
+      value: 3000,
+      status: "pago",
+    },
+    osId: "OS12348",
   },
   {
     id: 5,

@@ -46,7 +46,7 @@ const FormUser = ({
   "
       >
         <div className="flex gap-5  w-full">
-          <div className="field flex flex-col gap-2 flex-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1">
             <label htmlFor="name" className="font-medium text-zinc-400">
               Nome
             </label>
@@ -63,7 +63,7 @@ const FormUser = ({
               />
             </div>
           </div>
-          <div className="field flex flex-col gap-2 flex-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1">
             <label htmlFor="surname" className="font-medium text-zinc-400">
               Sobrenome
             </label>
@@ -83,7 +83,7 @@ const FormUser = ({
         </div>
 
         <div className=" flex gap-5 max-sm:grid max-sm:grid-cols-2  w-full">
-          <div className="field w-full flex flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 w-full flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label htmlFor="birthday" className="font-medium text-zinc-400">
               Data de nascimento
             </label>
@@ -103,7 +103,7 @@ const FormUser = ({
             </div>
           </div>
 
-          <div className="field w-full flex flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 w-full flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label htmlFor="gender" className="font-medium text-zinc-400">
               Genero
             </label>
@@ -123,7 +123,7 @@ const FormUser = ({
             </div>
           </div>
 
-          <div className="field flex w-full flex-col gap-2 flex-1 max-sm:col-span-2">
+          <div className="field px-2 flex w-full flex-col gap-2 flex-1 max-sm:col-span-2">
             <label htmlFor="document" className="font-medium text-zinc-400">
               CPF
             </label>
@@ -146,7 +146,7 @@ const FormUser = ({
         </div>
 
         <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2 ">
-          <div className="field flex flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label htmlFor="phone" className="font-medium text-zinc-400">
               Telefone
             </label>
@@ -164,7 +164,7 @@ const FormUser = ({
             </div>
           </div>
 
-          <div className="field flex flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label htmlFor="email" className="font-medium text-zinc-400">
               Email
             </label>
@@ -182,7 +182,7 @@ const FormUser = ({
             </div>
           </div>
 
-          <div className="field flex flex-col gap-2 flex-1 max-sm:col-span-1">
+          <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label
               htmlFor="principal_function"
               className="font-medium text-zinc-400"

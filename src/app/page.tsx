@@ -45,7 +45,7 @@ export default function Home() {
               Organize e gerencie sua empresa de forma simples!
             </p>
           </div>
-          <div className="content w-full flex flex-col gap-3 max-md:gap-1 max-md:items-center items-end rounded-xl  max-md:py-2 max-md:bg-zinc-900">
+          <div className="content w-full flex flex-col gap-3 max-md:gap-1 max-md:items-center items-end rounded-xl  max-md:py-2 max-md:border border-zinc-900">
             <FormLogin
               user={user}
               setOpenModalModeIngress={setOpenModalModeIngress}
