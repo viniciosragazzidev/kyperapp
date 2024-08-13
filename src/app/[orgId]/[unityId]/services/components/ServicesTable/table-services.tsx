@@ -122,7 +122,7 @@ const TableServices = ({
                         {service.client[0].name}
                       </span>
                       <span className="text-zinc-600 text-sm">
-                        {service.client[0].contact}
+                        {service.client[0].phone}
                       </span>
                     </div>
                   </td>

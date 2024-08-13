@@ -53,7 +53,7 @@ const Sheet = ({ children, ...props }: SheetProps) => {
     >
       <div
         ref={refDiv}
-        className="w-full h-full p-5 max-w-[410px] absolute top-0 right-0 bg-zinc-950  border-l border-primary  translate-x-full transition-all"
+        className="w-full h-full p-5 max-w-[410px] absolute top-0 right-0 bg-zinc-950  border-l border-primary/40  translate-x-full transition-all"
       >
         <span className="z-[100]">
           <X

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import Sheet, { SheetDescription, SheetTitle } from "@/components/sheet-custom";
+import React, { useEffect } from "react";
+import Sheet, { SheetTitle } from "@/components/sheet-custom";
 import {
   ArrowRight,
   Box,
@@ -13,9 +13,7 @@ import {
   HardHat,
   Hourglass,
   ListCheck,
-  Mail,
   PaintBucket,
-  Phone,
   Plus,
   Trash,
 } from "lucide-react";
@@ -28,47 +26,168 @@ import {
   techniciansList,
 } from "@/lib/constants";
 import { brl } from "@/lib/utils";
+import { toast } from "sonner";
+import { ItemsTableType } from "./items-os-table";
+
+import { useForm, SubmitHandler } from "react-hook-form";
+
 interface SheetProps {
   open: boolean;
   onPress: () => void;
+  osItemsList: ItemsTableType[];
+  setOsItemsList: (osItemsList: ItemsTableType[]) => void;
+  currentOsItem?: ItemsTableType;
+  setCurrentOsItem: (currentOsItem: ItemsTableType | null) => void;
 }
-const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
-  const [osItens, setOsItens] = React.useState([
-    {
-      id: 1,
-      name: "Capa",
-      brand: "brand",
-      model: "model",
-      color: "color",
-    },
-    {
-      id: 2,
-      name: "Bateria",
-      brand: "brand",
-      model: "model",
-      color: "color",
-    },
-  ]);
+const SheetNewItemOs = ({
+  open,
+  onPress,
+  osItemsList,
+  setOsItemsList,
+  currentOsItem,
+  setCurrentOsItem,
+}: SheetProps) => {
+  const [osItensAcessories, setOsItensAcessories] = React.useState<any[]>([]);
 
-  const [osCostItems, setOsCostItems] = React.useState([
-    {
-      id: 1,
-      name: "Manutenção",
-      value: 100,
-    },
-    {
-      id: 2,
-      name: "Manutenção",
-      value: 100,
-    },
-  ]);
+  const [osCostItems, setOsCostItems] = React.useState<any[]>([]);
+
+  const [fieldOsItemAcessorie, setFieldOsItemAcessorie] = React.useState("");
+
+  const handleAddItemAcessorie = () => {
+    const newItem = {
+      id: osItensAcessories.length + 1,
+      name: fieldOsItemAcessorie,
+    };
+
+    setOsItensAcessories([newItem, ...osItensAcessories]);
+    setFieldOsItemAcessorie("");
+  };
+  const handleRemoveItemAcessorie = (id: number) => {
+    setOsItensAcessories(osItensAcessories.filter((item) => item.id !== id));
+  };
+
+  const [fieldOsCostItem, setFieldOsCostItem] = React.useState("");
+  const [fieldOsCostItemValue, setFieldOsCostItemValue] = React.useState("");
+
+  const handleAddCostItem = () => {
+    if (fieldOsCostItem.length > 0 && fieldOsCostItemValue.length > 0) {
+      const newItem = {
+        id: osCostItems.length + 1,
+        name: fieldOsCostItem,
+        value: fieldOsCostItemValue,
+      };
+      setOsCostItems([newItem, ...osCostItems]);
+      setFieldOsCostItem("");
+      setFieldOsCostItemValue("");
+    } else {
+      toast.error("Preencha todos os campos");
+    }
+  };
+  const handleRemoveCostItem = (id: number) => {
+    setOsCostItems(osCostItems.filter((item) => item.id !== id));
+  };
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    setValue,
+    formState,
+    formState: { isSubmitSuccessful, errors },
+  } = useForm<any>();
+  const onSubmit: SubmitHandler<any> = (data) => {
+    const currentStatus = StatusItens.find(
+      (status) => status.value === data["item-status"]
+    );
+    const newItem: ItemsTableType = {
+      id: currentOsItem?.id || osItemsList ? osItemsList!.length + 1 : 1,
+      name: data["item-name"],
+      brand: data["item-brand"],
+      model: data["item-model"],
+      serial: data["item-serial"],
+      color: data["item-color"],
+      accessories: osItensAcessories,
+      occurrence: data["item-occurrence"],
+      status: {
+        label: currentStatus?.label || "Aberto",
+        value: currentStatus?.value || "aberto",
+      },
+      costs: osCostItems,
+      technician: data["item-tech-resp"],
+      ocurrenceFinal: data["item-final-occurrence"],
+      totalCost: data["item-final-cost"],
+      amount: {
+        status: "pendente",
+        value: data["item-final-budget"] || 0,
+      },
+      paymentsMethods: data["item-final-payment-method"],
+      garantyDays: data["item-final-garanty-days"],
+      created_at: new Date().toISOString(),
+      osId: data["item-osId"],
+    };
+
+    if (formState.errors && Object.keys(formState.errors).length > 0) {
+      toast.error("Preencha todos os campos");
+    }
+
+    if (formState.errors && Object.keys(formState.errors).length === 0) {
+      if (currentOsItem && currentOsItem.id) {
+        setOsItemsList(
+          osItemsList.map((item) =>
+            item.id === currentOsItem.id ? newItem : item
+          )
+        );
+        toast.success("Item editado com sucesso");
+      } else {
+        setOsItemsList([...osItemsList, newItem]);
+        toast.success("Item adicionado ao orcamento");
+      }
+      onPress();
+      reset();
+    }
+
+    console.log(data);
+  };
+
+  useEffect(() => {
+    if (currentOsItem && currentOsItem.id && open) {
+      setValue("item-name", currentOsItem.name);
+      setValue("item-brand", currentOsItem.brand);
+      setValue("item-model", currentOsItem.model);
+      setValue("item-serial", currentOsItem.serial);
+      setValue("item-color", currentOsItem.color);
+      setValue("item-occurrence", currentOsItem.occurrence);
+      setValue("item-tech-resp", currentOsItem.technician);
+      setValue("item-final-occurrence", currentOsItem.ocurrenceFinal);
+      setValue("item-final-cost", currentOsItem.totalCost);
+      setValue("item-final-budget", currentOsItem.amount.value);
+      setValue("item-final-payment-method", currentOsItem.paymentsMethods);
+      setValue("item-final-garanty-days", currentOsItem.garantyDays);
+
+      setOsItensAcessories(currentOsItem.accessories || []);
+      setOsCostItems(currentOsItem.costs || []);
+      console.log(currentOsItem);
+    }
+
+    if (!open) {
+      reset();
+      setCurrentOsItem(null);
+      setOsItensAcessories([]);
+      setOsCostItems([]);
+    }
+  }, [currentOsItem, open]);
+
   return (
     <Sheet open={open} onPress={onPress}>
       <header>
         <SheetTitle>Dados do Item:</SheetTitle>
       </header>
 
-      <form className="pt-6 flex flex-col gap-4" action="">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="pt-6 flex flex-col gap-4"
+      >
         <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2 ">
           <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label htmlFor="item-name" className="font-medium text-zinc-400">
@@ -78,7 +197,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
               <Box className="text-zinc-400 absolute left-2" size={20} />
               <input
                 type="text"
-                name="item-name"
+                {...register("item-name", { required: true })}
                 id="item-name"
                 placeholder="Nome do Item"
                 autoComplete="one-time-code"
@@ -96,7 +215,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
               <Box className="text-zinc-400 absolute left-2" size={20} />
               <input
                 type="text"
-                name="item-brand"
+                {...register("item-brand", { required: true })}
                 id="item-brand"
                 placeholder="Marca"
                 autoComplete="one-time-code"
@@ -115,7 +234,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
               <Box className="text-zinc-400 absolute left-2" size={20} />
               <input
                 type="text"
-                name="item-model"
+                {...register("item-model", { required: true })}
                 id="item-model"
                 placeholder="Modelo"
                 autoComplete="one-time-code"
@@ -126,15 +245,15 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
           </div>
 
           <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
-            <label htmlFor="item-serie" className="font-medium text-zinc-400">
+            <label htmlFor="item-serial" className="font-medium text-zinc-400">
               N° de serie
             </label>
             <div className="w-full h-full flex items-center gap-2 relative ">
               <Dna className="text-zinc-400 absolute left-2" size={20} />
               <input
                 type="text"
-                name="item-serie"
-                id="item-serie"
+                {...register("item-serial", { required: true })}
+                id="item-serial"
                 placeholder="000000000"
                 autoComplete="one-time-code"
                 className="w-full h-full max-md:h-10 border border-zinc-800 text-slate-200 bg-zinc-950/60 px-2 pl-10 py-3 rounded-lg text-sm  focus:outline-primary/50  placeholder:text-zinc-400 outline-none focus:placeholder:opacity-0 focus:placeholder:-translate-y-2   placeholder:transition-all
@@ -155,7 +274,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
               />
               <input
                 type="text"
-                name="item-color"
+                {...register("item-color", { required: true })}
                 id="item-color"
                 placeholder="Preto"
                 autoComplete="one-time-code"
@@ -182,6 +301,8 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
                   type="text"
                   name="item-acessories"
                   id="item-acessories"
+                  value={fieldOsItemAcessorie}
+                  onChange={(e: any) => setFieldOsItemAcessorie(e.target.value)}
                   placeholder="Nome do acessório"
                   autoComplete="one-time-code"
                   className="w-full h-full max-md:h-10 border border-zinc-800 text-slate-200 bg-zinc-950/60 px-2 pl-10 py-3 rounded-lg text-sm  focus:outline-primary/50  placeholder:text-zinc-400 outline-none focus:placeholder:opacity-0 focus:placeholder:-translate-y-2   placeholder:transition-all
@@ -193,41 +314,55 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
                 size="full"
                 className=" flex-1 max-w-10"
                 color="secondary"
+                onClick={() => {
+                  handleAddItemAcessorie();
+                }}
               >
                 <Plus size={18} className="flex-shrink-0" />
               </Button>
             </div>
-            <ScrollArea className="w-full h-min overflow-hidden">
-              <table>
-                <thead className="bg-zinc-800/40  rounded-lg">
-                  <tr className=" ">
-                    <th className="w-full text-start text-sm font-bold py-2 px-4 ">
-                      Item
-                    </th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {osItens.map((item) => (
-                    <tr
-                      key={item.id}
-                      className=" border-b-2 border-zinc-800/50"
-                    >
-                      <td className="text-start text-sm max-w-xs">
-                        <p className="text-zinc-400 px-4 w-full overflow-hidden text-ellipsis flex-1 text-nowrap">
-                          {item.name}
-                        </p>{" "}
-                      </td>
-                      <td className="text-end px-4 py-3">
-                        <span className="cursor-pointer">
-                          <Trash size={14} className="flex-shrink-0" />
-                        </span>
-                      </td>
+            {osItensAcessories.length > 0 ? (
+              <ScrollArea className="w-full h-min max-h-72 overflow-hidden">
+                <table>
+                  <thead className="bg-zinc-800/40  rounded-lg">
+                    <tr className=" ">
+                      <th className="w-full text-start text-sm font-bold py-2 px-4 ">
+                        Item
+                      </th>
+                      <th></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </ScrollArea>
+                  </thead>
+                  <tbody>
+                    {osItensAcessories.map((item) => (
+                      <tr
+                        key={item.id}
+                        className=" border-b-2 border-zinc-800/50"
+                      >
+                        <td className="text-start text-sm max-w-[220px]">
+                          <p className="text-zinc-400 px-4 w-full overflow-hidden text-ellipsis flex-1 text-nowrap">
+                            {item.name}
+                          </p>{" "}
+                        </td>
+                        <td className="text-end px-4 py-3">
+                          <span
+                            onClick={() => handleRemoveItemAcessorie(item.id)}
+                            className="cursor-pointer"
+                          >
+                            <Trash size={14} className="flex-shrink-0" />
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </ScrollArea>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center py-4">
+                <h1 className="text-zinc-400 text-sm">
+                  Nenhum item adicionado
+                </h1>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex gap-5  w-full max-sm:grid  border-b-2 border-zinc-800/60 pb-5 ">
@@ -240,7 +375,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             </label>
             <div className="w-full h-full flex items-center gap-2 relative ">
               <textarea
-                name="item-occurrence"
+                {...register("item-occurrence", { required: true })}
                 id="item-occurrence"
                 placeholder="Descreva a ocorência"
                 autoComplete="one-time-code"
@@ -258,7 +393,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             <div className="w-full h-max flex items-center gap-2 min-w-44 relative ">
               <Clock className="text-zinc-400 absolute left-2" size={20} />
               <select
-                name="os-status"
+                {...register("os-status", { required: false })}
                 id="os-status"
                 autoComplete="one-time-code"
                 className="w-full   h-10 border border-zinc-800 text-slate-200 bg-zinc-950/60 px-2 pl-10  rounded-lg text-sm  focus:outline-primary/50  placeholder:text-zinc-400 outline-none focus:placeholder:opacity-0 focus:placeholder:-translate-y-2   placeholder:transition-all
@@ -284,7 +419,10 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
                 Custo do Serviço
               </label>
 
-              <span className="text-primary cursor-pointer hover:scale-[97%] active:scale-95 hover:opacity-80 transition-all">
+              <span
+                onClick={handleAddCostItem}
+                className="text-primary cursor-pointer hover:scale-[97%] active:scale-95 hover:opacity-80 transition-all"
+              >
                 <Plus size={16} />
               </span>
             </div>
@@ -300,6 +438,8 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
                   id="item-cost-name"
                   placeholder="Item"
                   autoComplete="one-time-code"
+                  value={fieldOsCostItem}
+                  onChange={(e) => setFieldOsCostItem(e.target.value)}
                   className="w-full h-full max-md:h-10 border border-zinc-800 text-slate-200 bg-zinc-950/60 px-2 pl-10 py-3 rounded-lg text-sm  focus:outline-primary/50  placeholder:text-zinc-400 outline-none focus:placeholder:opacity-0 focus:placeholder:-translate-y-2   placeholder:transition-all
   "
                 />
@@ -307,55 +447,68 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
 
               <div className="w-full  max-w-[110px] h-full flex items-center gap-2 relative ">
                 <input
-                  type="text"
+                  type="number"
                   name="item-cost-value"
                   id="item-cost-value"
                   placeholder="R$ 00,00"
                   autoComplete="one-time-code"
+                  value={fieldOsCostItemValue}
+                  onChange={(e) => setFieldOsCostItemValue(e.target.value)}
                   className="w-full h-full max-md:h-10 border border-zinc-800 text-slate-200 bg-zinc-950/60 px-2  py-3 rounded-lg text-sm  focus:outline-primary/50  placeholder:text-zinc-400 outline-none focus:placeholder:opacity-0 focus:placeholder:-translate-y-2   placeholder:transition-all
   "
                 />
               </div>
             </div>
-            <ScrollArea className="w-full h-min overflow-hidden">
-              <table className="w-full ">
-                <thead className="bg-zinc-800/40 w-full  rounded-lg">
-                  <tr className="w-full ">
-                    <th className=" text-start text-sm font-bold py-2 px-4 ">
-                      Item
-                    </th>
-                    <th className=" text-start text-sm font-bold py-2 px-4 ">
-                      Valor
-                    </th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {osCostItems.map((item) => (
-                    <tr
-                      key={item.id}
-                      className=" border-b-2 border-zinc-800/50"
-                    >
-                      <td className="text-start text-sm max-w-xs">
-                        <p className="text-zinc-400 px-4 w-full overflow-hidden text-ellipsis flex-1 text-nowrap">
-                          {item.name}
-                        </p>{" "}
-                      </td>
-                      <td className="text-start text-sm max-w-xs ">
-                        <p className="text-zinc-400 px-4 w-full overflow-hidden text-ellipsis flex-1 text-nowrap">
-                          {brl.format(item.value)}
-                        </p>{" "}
-                      </td>
-                      <td className="text-start text-sm max-w-xs py-2">
-                        <span className="cursor-pointer">
-                          <Trash size={14} className="flex-shrink-0" />
-                        </span>
-                      </td>
+            {osCostItems.length > 0 ? (
+              <ScrollArea className="w-full h-min overflow-hidden">
+                <table className="w-full ">
+                  <thead className="bg-zinc-800/40 w-full  rounded-lg">
+                    <tr className="w-full ">
+                      <th className=" text-start text-sm font-bold py-2 px-4 ">
+                        Item
+                      </th>
+                      <th className=" text-start text-sm font-bold py-2 px-4 ">
+                        Valor
+                      </th>
+                      <th></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </ScrollArea>
+                  </thead>
+                  <tbody>
+                    {osCostItems.map((item) => (
+                      <tr
+                        key={item.id}
+                        className=" border-b-2 border-zinc-800/50"
+                      >
+                        <td className="text-start text-sm max-w-[220px]">
+                          <p className="text-zinc-400 px-4 w-full overflow-hidden text-ellipsis flex-1 text-nowrap">
+                            {item.name}
+                          </p>{" "}
+                        </td>
+                        <td className="text-start text-sm max-w-[220px] ">
+                          <p className="text-zinc-400 px-4 w-full overflow-hidden text-ellipsis flex-1 text-nowrap">
+                            {brl.format(item.value)}
+                          </p>{" "}
+                        </td>
+                        <td className="text-start text-sm max-w-[220px] py-2">
+                          <span
+                            className="cursor-pointer"
+                            onClick={() => handleRemoveCostItem(item.id)}
+                          >
+                            <Trash size={14} className="flex-shrink-0" />
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </ScrollArea>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center py-4">
+                <h1 className="text-zinc-400 text-sm">
+                  Nenhum item adicionado
+                </h1>
+              </div>
+            )}
           </div>
         </div>
 
@@ -370,12 +523,13 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             <div className="w-full h-max flex items-center gap-2 min-w-44 relative ">
               <HardHat className="text-zinc-400 absolute left-2" size={20} />
               <select
-                name="item-tech-resp"
+                {...register("item-tech-resp", { required: false })}
                 id="item-tech-resp"
                 autoComplete="one-time-code"
                 className="w-full   h-10 border border-zinc-800 text-slate-200 bg-zinc-950/60 px-2 pl-10  rounded-lg text-sm  focus:outline-primary/50  placeholder:text-zinc-400 outline-none focus:placeholder:opacity-0 focus:placeholder:-translate-y-2   placeholder:transition-all
        "
               >
+                <option value="">Selecione</option>
                 {techniciansList.map((technician) => (
                   <option key={technician.id} value={technician.id}>
                     {technician.name}
@@ -396,7 +550,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             </label>
             <div className="w-full h-full flex items-center gap-2 relative ">
               <textarea
-                name="item-final-occurrence"
+                {...register("item-final-occurrence", { required: false })}
                 id="item-final-occurrence"
                 placeholder="Descreva o serviço feito..."
                 autoComplete="one-time-code"
@@ -422,7 +576,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
               />
               <input
                 type="text"
-                name="item-final-cost"
+                {...register("item-final-cost", { required: false })}
                 id="item-final-cost"
                 placeholder="R$ 0,00"
                 autoComplete="one-time-code"
@@ -446,7 +600,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
               />
               <input
                 type="text"
-                name="item-final-budget"
+                {...register("item-final-budget", { required: false })}
                 id="item-final-budget"
                 placeholder="R$ 0,00"
                 autoComplete="one-time-code"
@@ -467,12 +621,13 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             <div className="w-full h-max flex items-center gap-2 min-w-44 relative ">
               <HandCoins className="text-zinc-400 absolute left-2" size={20} />
               <select
-                name="item-final-payment-method"
+                {...register("item-final-payment-method", { required: false })}
                 id="item-final-payment-method"
                 autoComplete="one-time-code"
                 className="w-full   h-10 border border-zinc-800 text-slate-200 bg-zinc-950/60 px-2 pl-10  rounded-lg text-sm  focus:outline-primary/50  placeholder:text-zinc-400 outline-none focus:placeholder:opacity-0 focus:placeholder:-translate-y-2   placeholder:transition-all
        "
               >
+                <option value="">Selecione</option>
                 {paymentsMethods.map((item) => (
                   <option key={item.value} value={item.value}>
                     {item.label}
@@ -491,12 +646,13 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             <div className="w-full h-max flex items-center gap-2 min-w-44 relative ">
               <Hourglass className="text-zinc-400 absolute left-2" size={20} />
               <select
-                name="item-final-garanty-days"
+                {...register("item-final-garanty-days", { required: false })}
                 id="item-final-garanty-days"
                 autoComplete="one-time-code"
                 className="w-full   h-10 border border-zinc-800 text-slate-200 bg-zinc-950/60 px-2 pl-10  rounded-lg text-sm  focus:outline-primary/50  placeholder:text-zinc-400 outline-none focus:placeholder:opacity-0 focus:placeholder:-translate-y-2   placeholder:transition-all
        "
               >
+                <option value="">Selecione</option>
                 {garantyDays.map((item) => (
                   <option key={item.value} value={item.value}>
                     {item.label}
@@ -507,7 +663,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
           </div>
         </div>
         <div className="flex w-full justify-end pr-4">
-          <Button type="button" className="max-w-36">
+          <Button type="submit" className="max-w-36">
             Enviar <ArrowRight size={20} />
           </Button>
         </div>

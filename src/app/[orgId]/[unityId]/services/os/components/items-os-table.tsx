@@ -7,22 +7,29 @@ import { toast } from "sonner";
 
 import StatusBadge from "../../../components/Table/StatusBadge";
 import { CardInfoNotificationAvatar } from "../../../components/CardInfo";
-import { itemTableType, osTableType, StatusType } from "@/lib/types";
+import { itemOsTableType, osTableType, StatusType } from "@/lib/types";
 import { brl, formateDate } from "@/lib/utils";
 import TableServicesOptionsPopover from "../../components/ServicesTable/table-services-options-popover";
+import TableOsItemOptionPopover from "./TableOsItemOptionPopover";
 
 // Interface para definir o tipo de dado da tabela de serviços
-export interface ItemsTableType extends itemTableType {}
+export interface ItemsTableType extends itemOsTableType {}
 
 // Componente principal da Tabela de Serviços
 const ItemOsTable = ({
   items,
   setCheckedRowTable,
   checkedRowTable,
+  currentOsItem,
+  setCurrentOsItem,
+  onPress,
 }: {
   items: ItemsTableType[];
   setCheckedRowTable: React.Dispatch<React.SetStateAction<number[]>>;
   checkedRowTable: number[];
+  currentOsItem?: ItemsTableType;
+  setCurrentOsItem?: (currentOsItem: ItemsTableType) => void;
+  onPress?: () => void;
 }) => {
   // Função para selecionar/desmarcar todas as linhas da tabela
   const handleCheckAll = () => {
@@ -51,7 +58,7 @@ const ItemOsTable = ({
     <ScrollArea className="overflow-hidden backdrop-blur-sm py-4 relative max-lg:w-[calc(100vw-64px)] h-screen max-h-72 max-sm:w-[calc(100vw-32px)]">
       <div className="w-full relative block h-80 max-md:min-w-[800px] min-w-[500px]  ">
         {items && items.length > 0 ? (
-          <table className="w-full h-full">
+          <table className="w-full h-fit">
             <thead className="w-full text-left border-t-2 border-zinc-800">
               <tr>
                 <th className="text-zinc-200 text-sm font-medium px-2 py-3">
@@ -67,9 +74,11 @@ const ItemOsTable = ({
                   </label>
                 </th>
                 <th className="text-zinc-200 text-sm font-medium px-2">Item</th>
-                <th className="text-zinc-200 text-sm font-medium px-2">
-                  Técnico
-                </th>
+                {items.filter((item) => item.technician).length > 0 && (
+                  <th className="text-zinc-200 text-sm font-medium px-2">
+                    Técnico
+                  </th>
+                )}
                 <th className="text-zinc-200 text-sm font-medium px-2">
                   Status
                 </th>
@@ -81,9 +90,9 @@ const ItemOsTable = ({
               </tr>
             </thead>
 
-            <tbody className="w-full text-left">
+            <tbody className="w-full text-left ">
               {items.map((item) => (
-                <tr key={item.id} className="border-t border-zinc-900">
+                <tr key={item.id} className="border-t border-zinc-900 ">
                   <td className="text-zinc-200 text-sm font-medium px-2 py-6">
                     <label
                       htmlFor=""
@@ -109,12 +118,11 @@ const ItemOsTable = ({
                       </div>
                     </div>
                   </td>
-                  <td className="text-zinc-600 text-sm font-medium px-2">
-                    <div className="flex items-center gap-2">
-                      <CardInfoNotificationAvatar url="https://avatars.githubusercontent.com/u/125518719?v=4" />
-                      <span>{item.technician}</span>
-                    </div>
-                  </td>
+                  {items.filter((item) => item.technician).length > 0 && (
+                    <td className="text-zinc-300 text-sm font-medium px-2">
+                      {item.technician}
+                    </td>
+                  )}
                   <td className="text-zinc-300 text-sm font-medium px-2">
                     <StatusBadge status={item.status.value}>
                       {item.status.label}
@@ -133,13 +141,17 @@ const ItemOsTable = ({
                       <span>{brl.format(item.amount.value)}</span>
                     </div>
                   </td>
-                  <TableServicesOptionsPopover idOs={item.id.toString()} />
+                  <TableOsItemOptionPopover
+                    currentItem={item}
+                    setCurrentItem={setCurrentOsItem!}
+                    onPress={onPress!}
+                  />
                 </tr>
               ))}
             </tbody>
           </table>
         ) : (
-          <div className="w-screen h-full flex items-center justify-center ">
+          <div className="max-sm:w-screen w-full h-full flex items-center justify-center ">
             <span className="text-zinc-500">Nenhum registro encontrado</span>
           </div>
         )}

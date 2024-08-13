@@ -1,3 +1,8 @@
+export type labelType = {
+  id: number;
+  label: string;
+  value: any;
+};
 export type StatusItem = "aberto" | "pendente" | "iniciado" | "pronto";
 export type StatusType = {
   value: StatusItem;
@@ -7,11 +12,24 @@ export type StatusType = {
 
 export type osTableType = {
   id: number;
+  unityId: string;
   os: string;
   client: [
     {
       name: string;
-      contact: string;
+      surname: string;
+
+      brithDate: string;
+      gender: string;
+      document: string;
+      phone: string;
+      email: string;
+      street: string;
+      number: string;
+      neighborhood: string;
+      city: string;
+      state: string;
+      zipCode: string;
     }
   ];
   items: {
@@ -25,22 +43,45 @@ export type osTableType = {
   technician: string;
   amount: {
     value: number;
-    status: "pago" | "pendente";
+    status: string;
   };
+  description: string;
 };
 
-export type itemTableType = {
+export type itemOsAcessoriesType = {
+  id: number;
+  name: string;
+};
+
+export type itemOsCostType = {
+  id: number;
+  name: string;
+  value: number;
+};
+
+export type itemOsTableType = {
   id: number;
   name: string;
   brand: string;
   model: string;
+  serial: string;
+  color: string;
+  accessories?: itemOsAcessoriesType[];
+  occurrence: string;
 
-  technician: string;
   status: StatusType;
-  created_at: string;
+  costs?: itemOsCostType[];
+  technician: string;
+  ocurrenceFinal?: string;
+
+  totalCost?: number;
   amount: {
     value: number;
-    status: "pago" | "pendente";
+    status: string;
   };
+  paymentsMethods: labelType[];
+  garantyDays: labelType[];
+
+  created_at: string;
   osId?: string;
 };
