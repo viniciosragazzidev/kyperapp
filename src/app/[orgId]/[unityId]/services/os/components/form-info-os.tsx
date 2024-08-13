@@ -1,14 +1,21 @@
 "use client";
 
 import React from "react";
-import { ArrowRight, CircleHelp, Clock, Dna, FilePlus2 } from "lucide-react";
+import { ArrowRight, CircleHelp, Clock, FilePlus2 } from "lucide-react";
 import Button from "@/components/Button";
 import ItemOsTable from "./items-os-table";
 import { itemsRoot } from "@/lib/constants";
 import { StatusItens } from "@/lib/constants";
+import SheetNewItemOs from "./SheetNewItemOs";
 
 const FormInfoOs = () => {
   const [checkedRowTable, setCheckedRowTable] = React.useState<number[]>([]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const onPress = () => {
+    setOpen(!open);
+  };
   return (
     <div className="w-full h-full flex flex-col gap-6">
       <header className="w-full flex justify-between items-center">
@@ -24,9 +31,11 @@ const FormInfoOs = () => {
           <h4 className="text-zinc-200 font-semibold text-xl w-full mr-auto block">
             Itens:
           </h4>
-          <Button size="full">
+          <Button onClick={onPress} size="full">
             <FilePlus2 size={16} />
           </Button>
+
+          <SheetNewItemOs open={open} onPress={onPress} />
         </div>
 
         <ItemOsTable
