@@ -143,8 +143,8 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2 ">
-          <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
+        <div className="flex gap-5  w-full max-sm:grid  ">
+          <div className="field px-2 flex flex-col gap-2 flex-1 ">
             <label htmlFor="item-color" className="font-medium text-zinc-400">
               Cor
             </label>
@@ -165,8 +165,8 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2 ">
-          <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
+        <div className="flex gap-5  w-full max-sm:grid  ">
+          <div className="field px-2 flex flex-col gap-2 flex-1 ">
             <div className="flex items-center justify-between">
               <label
                 htmlFor="item-acessories"
@@ -230,8 +230,8 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             </ScrollArea>
           </div>
         </div>
-        <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2 border-b-2 border-zinc-800/60 pb-5 ">
-          <div className="field px-2 flex w-full flex-col gap-2 max-sm:col-span-1">
+        <div className="flex gap-5  w-full max-sm:grid  border-b-2 border-zinc-800/60 pb-5 ">
+          <div className="field px-2 flex w-full flex-col gap-2 ">
             <label
               htmlFor="item-occurrence"
               className="font-medium text-zinc-400"
@@ -250,8 +250,8 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2  ">
-          <div className="field px-2 w-full flex flex-col gap-2 flex-1 max-sm:col-span-1">
+        <div className="flex gap-5  w-full max-sm:grid  ">
+          <div className="field px-2 w-full flex flex-col gap-2 flex-1 ">
             <label htmlFor="os-status" className="font-medium text-zinc-400">
               Status
             </label>
@@ -274,7 +274,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
           </div>
         </div>
 
-        <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2 ">
+        <div className="flex gap-5  w-full max-sm:grid  ">
           <div className="field px-2 flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <div className="flex items-center justify-between">
               <label
@@ -359,7 +359,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
           </div>
         </div>
 
-        <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2  ">
+        <div className="flex gap-5  w-full max-sm:grid   ">
           <div className="field px-2 w-full flex flex-col gap-2 flex-1 max-sm:col-span-1">
             <label
               htmlFor="item-tech-resp"
@@ -386,7 +386,7 @@ const SheetNewItemOs = ({ open, onPress }: SheetProps) => {
           </div>
         </div>
 
-        <div className="flex gap-5  w-full max-sm:grid max-sm:grid-cols-2 border-b-2 border-zinc-800/60 pb-5 ">
+        <div className="flex gap-5  w-full max-sm:grid  border-b-2 border-zinc-800/60 pb-5 ">
           <div className="field px-2 flex w-full flex-col gap-2 max-sm:col-span-1">
             <label
               htmlFor="item-final-occurrence"
